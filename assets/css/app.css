@@ -1,0 +1,30 @@
+/* This file is for your main application css. */
+
+/* @import "./phoenix.css"; */
+
+/* purgecss start ignore */
+@import "tailwindcss/base";
+@import "tailwindcss/components";
+/* purgecss end ignore */
+
+@import "tailwindcss/utilities";
+
+@import "../node_modules/nprogress/nprogress.css";
+
+.cell {
+  width: 12px !important; 
+  height: 12px !important;
+  border: 1px solid grey;
+}
+
+.live {
+  background-color: black;
+}
+
+.dead {
+  background-color: white;
+}
+
+.huh {
+  background-color: red;
+}

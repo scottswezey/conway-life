@@ -1,0 +1,93 @@
+<div class="container mx-auto py-10">
+  <div class="md:flex md:items-center md:justify-between mb-3">
+    <div class="flex-1 min-w-0">
+      <h2 class="text-2xl font-bold leading-7 text-gray-900 sm:text-3xl sm:leading-9 sm:truncate">
+        Conway's Game of Life
+      </h2>
+    </div>
+    <div class="mt-4 flex md:mt-0 md:ml-4">
+      <span class="shadow-sm rounded-md">
+        <button phx-click="reset" type="button" class="inline-flex items-center px-4 py-2 border border-gray-300 text-sm leading-5 font-medium rounded-md text-gray-700 bg-white hover:text-gray-500 focus:outline-none focus:shadow-outline-blue focus:border-blue-300 active:text-gray-800 active:bg-gray-50 transition duration-150 ease-in-out">
+          Reset
+        </button>
+      </span>
+
+      <%= if @game_active do %>
+        <span class="ml-3 shadow-sm rounded-md">
+          <button phx-click="pause" type="button" class="inline-flex items-center px-4 py-2 border border-transparent text-sm leading-5 font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-500 focus:outline-none focus:shadow-outline-indigo focus:border-indigo-700 active:bg-indigo-700 transition duration-150 ease-in-out">
+          Pause
+          </button>
+        </span>
+      <% else %>
+        <span class="ml-3 shadow-sm rounded-md">
+          <button phx-click="step" type="button" class="inline-flex items-center px-4 py-2 border border-gray-300 text-sm leading-5 font-medium rounded-md text-gray-700 bg-white hover:text-gray-500 focus:outline-none focus:shadow-outline-blue focus:border-blue-300 active:text-gray-800 active:bg-gray-50 transition duration-150 ease-in-out">
+            Step
+          </button>
+        </span>
+        <span class="ml-3 shadow-sm rounded-md">
+          <button phx-click="start" type="button" class="inline-flex items-center px-4 py-2 border border-transparent text-sm leading-5 font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-500 focus:outline-none focus:shadow-outline-indigo focus:border-indigo-700 active:bg-indigo-700 transition duration-150 ease-in-out">
+          Start
+          </button>
+        </span>
+      <% end %>
+    </div>
+  </div>
+
+  <main>
+    <div class="max-w-7xl mx-auto sm:px-6 lg:px-8 flex">
+      <table class="w-3/4">
+        <%= for x <- 1 .. @game.size do %>
+        <tr>
+          <%= for y <- 1 .. @game.size do %>
+            <td class="text-middle cell border-b <%= @game.board[{x, y}] |> to_s %>"
+                phx-click="toggle"
+                phx-value-x="<%= x %>"
+                phx-value-y="<%= y %>">
+              <button class="min-w-full min-h-full" phx-click="toggle"
+                phx-value-x="<%= x %>"
+                phx-value-y="<%= y %>">&middot;</button>
+            </td>
+          <% end %>
+        </tr>
+        <% end %>
+      </table> 
+
+      <div class="w-1/4 ml-3">
+        <div class="px-8 pt-8">
+          <p class="text-2xl leading-8 font-extrabold text-indigo-600 sm:text-3xl sm:leading-9">
+            <%= @game.size %> x <%= @game.size %>
+          </p>
+          <p class="text-base leading-6 font-medium text-gray-500">
+            World Size
+          </p>
+        </div>
+        <div class="px-8 pt-8">
+          <p class="text-2xl leading-8 font-extrabold text-indigo-600 sm:text-3xl sm:leading-9">
+            <%= @game.generation %>
+          </p>
+          <p class="text-base leading-6 font-medium text-gray-500">
+            Generation
+          </p>
+        </div>
+        <div class="px-8 pt-8">
+          <p class="text-2xl leading-8 font-extrabold text-indigo-600 sm:text-3xl sm:leading-9">
+            <%= @delay %>ms
+          </p>
+          <p class="text-base leading-6 font-medium text-gray-500">
+            Tick delay
+          </p>
+        </div>
+
+
+        <h2 class="pt-8 text-2xl leading-8 font-extrabold text-indigo-600 sm:text-3xl sm:leading-9">Rules:</h2>
+        <ol class="list-decimal list-inside text-base leading-6 font-medium text-gray-500">
+          <li class="mt-3">Any live cell with fewer than two live neighbours dies, as if by underpopulation.</li>
+          <li class="mt-3">Any live cell with two or three live neighbours lives on to the next generation.</li>
+          <li class="mt-3">Any live cell with more than three live neighbours dies, as if by overpopulation.</li>
+          <li class="mt-3">Any dead cell with exactly three live neighbours becomes a live cell, as if by reproduction.</li>
+        </ol>
+      </div>
+      
+    </div>
+  </main>
+</div>
