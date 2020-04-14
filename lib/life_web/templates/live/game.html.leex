@@ -35,11 +35,11 @@
 
   <main>
     <div class="max-w-7xl mx-auto sm:px-6 lg:px-8 mx-2 flex">
-      <table class="w-3/4">
+      <table>
         <%= for x <- 1 .. @game.size do %>
         <tr>
           <%= for y <- 1 .. @game.size do %>
-            <td class="text-middle cell border-b <%= @game.board[{x, y}] |> to_s %>"
+            <td class="text-middle cell <%= @game.board[{x, y}] |> to_s %>"
                 phx-click="toggle"
                 phx-value-x="<%= x %>"
                 phx-value-y="<%= y %>">
@@ -52,7 +52,7 @@
         <% end %>
       </table> 
 
-      <div class="w-1/4 ml-3">
+      <div class="ml-3">
         <div class="px-8 pt-8">
           <p class="text-2xl leading-8 font-extrabold text-indigo-600 sm:text-3xl sm:leading-9">
             <%= @game.generation %>
@@ -66,7 +66,7 @@
           <label for="delay" class="block text-2xl leading-8 font-extrabold text-indigo-600 sm:text-3xl sm:leading-9">Delay</label>
           <div class="mt-1 relative rounded-md shadow-sm">
             <input id="delay"
-                   class="form-input block w-full pl-7 pr-12 sm:text-sm sm:leading-5"
+                   class="form-input block w-full pl-3 pr-12 sm:text-sm sm:leading-5"
                    placeholder="200"
                    value="<%= @delay %>"
                    phx-blur="set-delay" />
@@ -82,7 +82,7 @@
           <label for="size" class="block text-2xl leading-8 font-extrabold text-indigo-600 sm:text-3xl sm:leading-9">World Size</label>
           <div class="mt-1 relative rounded-md shadow-sm">
             <input id="size"
-                   class="form-input block w-full pl-7 pr-12 sm:text-sm sm:leading-5"
+                   class="form-input block w-full pl-3 pr-12 sm:text-sm sm:leading-5"
                    placeholder="<%= @game.size %>"
                    value="<%= @game.size %>"
                    phx-blur="set-size" />

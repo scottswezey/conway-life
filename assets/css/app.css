@@ -12,8 +12,8 @@
 @import "../node_modules/nprogress/nprogress.css";
 
 .cell {
-  width: 12px !important; 
-  height: 12px !important;
+  width: 20px !important; 
+  height: 20px !important;
   border: 1px solid grey;
 }
 
