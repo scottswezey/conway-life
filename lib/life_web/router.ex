@@ -22,17 +22,17 @@ defmodule LifeWeb.Router do
     plug :accepts, ["json"]
   end
 
-  scope "/", LifeWeb do
-    pipe_through :browser
+  # scope "/", LifeWeb do
+  #   pipe_through :browser
 
-    get "/", PageController, :index
-    # live "/game", GameLive
-  end
+  #   get "/", PageController, :index
+  #   # live "/game", GameLive
+  # end
 
   scope "/", LifeWeb do
     pipe_through :live_views
 
-    live "/game", GameLive
+    live "/", GameLive
   end
 
   # Other scopes may use custom stacks.

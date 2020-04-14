@@ -1,8 +1,9 @@
 defmodule LifeWeb.GameLive do
   use Phoenix.LiveView
 
-  @size 20
-  @delay 200
+  @initial_size 20
+  @initial_delay 500
+  @min_delay 100
 
   # defstruct game: nil, game_active: false, timer: nil, size: 10
 
@@ -12,7 +13,13 @@ defmodule LifeWeb.GameLive do
 
   def mount(_params, _, socket) do
     {:ok,
-     assign(socket, game: Life.Game.new(@size), game_active: false, timer: nil, delay: @delay)}
+     assign(socket,
+       game: Life.Game.new(@initial_size),
+       game_active: false,
+       timer: nil,
+       size: @initial_size,
+       delay: @initial_delay
+     )}
   end
 
   # defp new(size \\ 10) do
@@ -45,11 +52,40 @@ defmodule LifeWeb.GameLive do
     {:noreply, assign(socket, game_active: false, timer: nil)}
   end
 
-  def handle_event("set-delay", %{"value" => delay}, socket) do
-    :timer.cancel(socket.assigns.timer)
-    delay = String.to_integer(delay)
+  def handle_event("set-size", %{"value" => size}, socket) do
+    timer = socket.assigns.timer
 
-    {:noreply, assign(socket, delay: delay, timer: nil, game_active: false)}
+    if timer != nil do
+      :timer.cancel(timer)
+    end
+
+    size = String.to_integer(size)
+
+    {:noreply,
+     assign(socket, game_active: false, game: Life.Game.new(size), size: size, timer: nil)}
+  end
+
+  def handle_event("set-delay", %{"value" => delay}, socket) do
+    delay =
+      delay
+      |> String.to_integer()
+      |> List.wrap()
+      |> Kernel.++([@min_delay])
+      |> Enum.max()
+
+    timer = socket.assigns.timer
+
+    if timer != nil do
+      :timer.cancel(timer)
+    end
+
+    {:ok, timer} =
+      case socket.assigns.game_active do
+        true -> :timer.send_interval(delay, self(), :tick)
+        false -> {:ok, nil}
+      end
+
+    {:noreply, assign(socket, delay: delay, timer: timer)}
   end
 
   def handle_event("reset", _value, socket) do
@@ -59,6 +95,6 @@ defmodule LifeWeb.GameLive do
       :timer.cancel(timer)
     end
 
-    {:noreply, assign(socket, game_active: false, game: Life.Game.new(@size))}
+    {:noreply, assign(socket, game_active: false, game: Life.Game.new(socket.assigns.size))}
   end
 end
