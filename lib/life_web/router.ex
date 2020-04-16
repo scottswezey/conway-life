@@ -31,7 +31,7 @@ defmodule LifeWeb.Router do
   scope "/", LifeWeb do
     pipe_through [:browser, :admin_only]
 
-    live_dashboard "/dashboard"
+    live_dashboard "/dashboard", metrics: LifeWeb.Telemetry
   end
 
   scope "/", LifeWeb do
