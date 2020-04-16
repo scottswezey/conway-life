@@ -56,6 +56,8 @@ config :life, LifeWeb.Endpoint,
     ]
   ]
 
+config :life, LifeWeb.Dashboard, admin_pass: "secret"
+
 # Do not include metadata nor timestamps in development logs
 config :logger, :console, format: "[$level] $message\n"
 

@@ -4,6 +4,12 @@
 # remember to add this file to your .gitignore.
 use Mix.Config
 
+admin_pass =
+  System.get_env("ADMIN_PASS") ||
+    raise """
+    environment variable ADMIN_PASS is missing.
+    """
+
 secret_key_base =
   System.get_env("SECRET_KEY_BASE") ||
     raise """
@@ -17,6 +23,8 @@ config :life, LifeWeb.Endpoint,
     transport_options: [socket_opts: [:inet6]]
   ],
   secret_key_base: secret_key_base
+
+config :life, LifeWeb.Dashboard, admin_pass: admin_pass
 
 # ## Using releases (Elixir v1.9+)
 #

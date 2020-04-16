@@ -25,7 +25,9 @@ defmodule LifeWeb.Router do
   # end
 
   pipeline :admin_only do
-    plug :basic_auth, username: "scott", password: "secret"
+    plug :basic_auth,
+      username: "scott",
+      password: Application.get_env(:life, LifeWeb.Dashboard)[:admin_pass]
   end
 
   scope "/", LifeWeb do
