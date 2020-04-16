@@ -1,5 +1,7 @@
 defmodule LifeWeb.Router do
   use LifeWeb, :router
+  import Plug.BasicAuth
+  import Phoenix.LiveDashboard.Router
 
   pipeline :browser do
     plug :accepts, ["html"]
@@ -18,16 +20,19 @@ defmodule LifeWeb.Router do
     plug :put_root_layout, {LifeWeb.LayoutView, :root}
   end
 
-  pipeline :api do
-    plug :accepts, ["json"]
+  # pipeline :api do
+  #   plug :accepts, ["json"]
+  # end
+
+  pipeline :admin_only do
+    plug :basic_auth, username: "scott", password: "secret"
   end
 
-  # scope "/", LifeWeb do
-  #   pipe_through :browser
+  scope "/", LifeWeb do
+    pipe_through [:browser, :admin_only]
 
-  #   get "/", PageController, :index
-  #   # live "/game", GameLive
-  # end
+    live_dashboard "/dashboard"
+  end
 
   scope "/", LifeWeb do
     pipe_through :live_views
