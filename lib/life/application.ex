@@ -8,6 +8,7 @@ defmodule Life.Application do
   def start(_type, _args) do
     # List all child processes to be supervised
     children = [
+      {Phoenix.PubSub, name: Life.PubSub},
       LifeWeb.Telemetry,
       # Start the endpoint when the application starts
       LifeWeb.Endpoint
