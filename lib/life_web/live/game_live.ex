@@ -1,16 +1,16 @@
 defmodule LifeWeb.GameLive do
-  use Phoenix.LiveView
+  use LifeWeb, :live_view
 
   @initial_size 20
   @initial_delay 500
   @min_delay 100
 
-  # defstruct game: nil, game_active: false, timer: nil, size: 10
+  # @impl true
+  # def render(assigns) do
+  #   Phoenix.View.render(LifeWeb.LiveView, "game.html", assigns)
+  # end
 
-  def render(assigns) do
-    Phoenix.View.render(LifeWeb.LiveView, "game.html", assigns)
-  end
-
+  @impl true
   def mount(_params, _, socket) do
     {:ok,
      assign(socket,
@@ -22,15 +22,13 @@ defmodule LifeWeb.GameLive do
      )}
   end
 
-  # defp new(size \\ 10) do
-  #   %__MODULE__{size: size, game: Life.Game.new(size)}
-  # end
-
+  @impl true
   def handle_info(:tick, socket) do
     new_state = Life.Game.tick(socket.assigns.game)
     {:noreply, assign(socket, game: new_state)}
   end
 
+  @impl true
   def handle_event("toggle", %{"x" => x, "y" => y}, socket) do
     pos = {String.to_integer(x), String.to_integer(y)}
     new_game = socket.assigns.game |> Life.Game.toggle_cell(pos)
@@ -38,20 +36,24 @@ defmodule LifeWeb.GameLive do
     {:noreply, assign(socket, game: new_game)}
   end
 
+  @impl true
   def handle_event("start", _value, socket) do
     {:ok, timer} = :timer.send_interval(socket.assigns.delay, self(), :tick)
     {:noreply, assign(socket, game_active: true, timer: timer)}
   end
 
+  @impl true
   def handle_event("step", _value, socket) do
     {:noreply, assign(socket, game: Life.Game.tick(socket.assigns.game))}
   end
 
+  @impl true
   def handle_event("pause", _value, socket) do
     :timer.cancel(socket.assigns.timer)
     {:noreply, assign(socket, game_active: false, timer: nil)}
   end
 
+  @impl true
   def handle_event("set-size", %{"value" => size}, socket) do
     timer = socket.assigns.timer
 
@@ -65,6 +67,7 @@ defmodule LifeWeb.GameLive do
      assign(socket, game_active: false, game: Life.Game.new(size), size: size, timer: nil)}
   end
 
+  @impl true
   def handle_event("set-delay", %{"value" => delay}, socket) do
     delay =
       delay
@@ -88,6 +91,7 @@ defmodule LifeWeb.GameLive do
     {:noreply, assign(socket, delay: delay, timer: timer)}
   end
 
+  @impl true
   def handle_event("reset", _value, socket) do
     timer = socket.assigns.timer
 
@@ -97,4 +101,10 @@ defmodule LifeWeb.GameLive do
 
     {:noreply, assign(socket, game_active: false, game: Life.Game.new(socket.assigns.size))}
   end
+
+  defp to_s(:live), do: "live"
+  defp to_s(:dead), do: "dead"
+
+  # This should not be possible
+  defp to_s(_any), do: "huh"
 end
