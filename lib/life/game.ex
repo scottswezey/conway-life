@@ -10,7 +10,7 @@ defmodule Life.Game do
     %__MODULE__{
       board: empty_board(size),
       generation: 0,
-      size: size
+      size: if(size <= 50, do: size, else: 50)
     }
   end
 
@@ -111,4 +111,7 @@ defmodule Life.Game do
     end)
     |> Map.new()
   end
+
+  defp empty_board(size) when is_integer(size) and size <= 3,
+    do: raise("Requested board size too small.")
 end
