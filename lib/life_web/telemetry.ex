@@ -31,13 +31,6 @@ defmodule LifeWeb.Telemetry do
         unit: {:native, :millisecond}
       ),
 
-      # Database Time Metrics
-      # summary("life.repo.query.total_time", unit: {:native, :millisecond}),
-      # summary("life.repo.query.decode_time", unit: {:native, :millisecond}),
-      # summary("life.repo.query.query_time", unit: {:native, :millisecond}),
-      # summary("life.repo.query.queue_time", unit: {:native, :millisecond}),
-      # summary("life.repo.query.idle_time", unit: {:native, :millisecond}),
-
       # VM Metrics
       summary("vm.memory.total", unit: {:byte, :kilobyte}),
       summary("vm.total_run_queue_lengths.total"),

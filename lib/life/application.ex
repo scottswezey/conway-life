@@ -1,19 +1,13 @@
 defmodule Life.Application do
-  # See https://hexdocs.pm/elixir/Application.html
-  # for more information on OTP Applications
   @moduledoc false
 
   use Application
 
   def start(_type, _args) do
-    # List all child processes to be supervised
     children = [
       {Phoenix.PubSub, name: Life.PubSub},
       LifeWeb.Telemetry,
-      # Start the endpoint when the application starts
       LifeWeb.Endpoint
-      # Starts a worker by calling: Life.Worker.start_link(arg)
-      # {Life.Worker, arg},
     ]
 
     # See https://hexdocs.pm/elixir/Supervisor.html
@@ -22,8 +16,6 @@ defmodule Life.Application do
     Supervisor.start_link(children, opts)
   end
 
-  # Tell Phoenix to update the endpoint configuration
-  # whenever the application is updated.
   def config_change(changed, _new, removed) do
     LifeWeb.Endpoint.config_change(changed, removed)
     :ok
