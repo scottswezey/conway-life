@@ -8,7 +8,8 @@ In honor of John Conway, I rebuilt his Game of Life simulation in Elixir using P
 * Install dependencies with `mix deps.get`
 * Install Node.js dependencies with `cd assets && npm install`
 * Start Phoenix endpoint with `mix phx.server`
-* Now you can visit [`localhost:4000`](http://localhost:4000) from your browser.
+* Now you can play by visiting [`localhost:4000`](http://localhost:4000) from your browser.
+* Access the dashboard at [`localhost:4000/dashboard`](http://localhost:4000/dashboard) in your browser. During development, the username is `scott` and the password is `secret`.
 
 Want to run in production? Please [see the Phoenix deployment guides](https://hexdocs.pm/phoenix/deployment.html).
 
