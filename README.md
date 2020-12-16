@@ -4,13 +4,13 @@ In honor of John Conway, I rebuilt his Game of Life simulation in Elixir using P
 
 ## To run locally
 
-* Requires Erlang, Elixir, NPM.
+* Requires Erlang/OTP 23+, Elixir 1.7+, NPM 7+.
 * Install dependencies with `mix deps.get`
 * Install Node.js dependencies with `cd assets && npm install`
 * Start Phoenix endpoint with `mix phx.server`
 * Now you can visit [`localhost:4000`](http://localhost:4000) from your browser.
 
-Ready to run in production? Please [check our deployment guides](https://hexdocs.pm/phoenix/deployment.html).
+Want to run in production? Please [see the Phoenix deployment guides](https://hexdocs.pm/phoenix/deployment.html).
 
 ## Updating Live View:
 
