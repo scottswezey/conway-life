@@ -1,12 +1,14 @@
-# Life
+# Conway-Life
 
-To start your Phoenix server:
+In honor of John Conway, I rebuilt his Game of Life simulation in Elixir using Phoneix and LiveView.
 
-  * Install dependencies with `mix deps.get`
-  * Install Node.js dependencies with `cd assets && npm install`
-  * Start Phoenix endpoint with `mix phx.server`
+## To run locally
 
-Now you can visit [`localhost:4000`](http://localhost:4000) from your browser.
+* Requires Erlang, Elixir, NPM.
+* Install dependencies with `mix deps.get`
+* Install Node.js dependencies with `cd assets && npm install`
+* Start Phoenix endpoint with `mix phx.server`
+* Now you can visit [`localhost:4000`](http://localhost:4000) from your browser.
 
 Ready to run in production? Please [check our deployment guides](https://hexdocs.pm/phoenix/deployment.html).
 
